@@ -1,0 +1,108 @@
+VONAGE API
+-----------------------------------------------------------------
+https://messages-sandbox.nexmo.com/v1/messages
+post
+
+Body >> JSON
+{
+"from": "14157386102",
+"to": "919987870583",
+"message_type": "text",
+"text": "This is a WhatsApp Message sent from the Messages",
+"channel": "whatsapp"
+}
+
+Header
+Authorization
+Basic MGYwMDU1MWU6eHhTZDFVME94WGFjenB0ZQ==
+
+
+Authorization
+key Basic
+value
+MGYwMDU1MWU6eHhTZDFVME94WGFjenB0ZQ==
+-------------------------------------------------------
+
+
+
+Through Facebook
+---------------------------------------
+
+https://graph.facebook.com/v13.0/105495115543525/messages
+
+POST
+
+Authorization
+Bearer EAAF20R6hNfYBACoZBdLMl3dLZC09GNQubgUEUkR08ZCkUGCXVvbJI3KBjr9XK8lO05UOQtARpu9LKUSbkpKZAjtUvZAw8jsSLwzEniNkdZAFlOL8eNumZCBN1mvX0WubH04XnbyMCmMIO2PLXrJZAhJZA428OI4EoZBxSDqxvkOrBx8XockzrcrdZC7ZBJwoYngbsQQMay70ZBmwOYgZDZD
+
+Body >>JSON
+{ "messaging_product": "whatsapp", "to": "918527890896", "type": "template", "template": { "name": "hello_world", "language": { "code": "en_US" } } }
+
+
+
+
+
+
+
+
+
+---------------------------------
+HttpURLConnection con = (HttpURLConnection) new URL(AuthUrl).openConnection();
+         strToken=getLIMSAuthToken();
+      con.setRequestMethod("POST"); //can set GET, POST, HEAD
+      con.setRequestProperty("Authorization", "Token "+strToken);
+      con.setRequestProperty("Content-Type", "application/json; utf-8");
+      con.setRequestProperty("Accept", "application/json");
+      con.setRequestProperty("Content-Language", "en-US");
+      con.setUseCaches(false);
+      con.setDoOutput(true);
+       -------------------------------------------
+
+//Calling API
+      String finalJSONData=labReqOtherDtls.toString();
+      try(OutputStream os = con.getOutputStream()) {
+             byte[] input = finalJSONData.getBytes("utf-8");
+             os.write(input, 0, input.length);
+         }catch(Exception e) { e.printStackTrace();}
+         StringBuffer responseData = new StringBuffer();
+         try(BufferedReader br = new BufferedReader(
+           new InputStreamReader(con.getInputStream(), "utf-8"))) {
+             String responseLine = null;
+             while ((responseLine = br.readLine()) != null) {
+              responseData.append(responseLine.trim());
+             }
+         }
+         System.out.println(responseData.toString());
+         JSONObject obj = new JSONObject(responseData.toString());
+               JSONArray arr = obj.getJSONArray("data"); 
+               
+               
+//Upload Document via meta-facebook-whatsapp-cloud-API
+---------------------------------------------------------------------
+https://graph.facebook.com/v13.0/105495115543525/media
+post
+
+Authorization
+Bearer
+EAAF20R6hNfYBAIgRIPexCetMxZCtDqIrEuVCk4efwv90YRGjtPAVNc3RZCflsAH70A9HkK5SEjDkCSsWaSZAyZBYMWc8fNJp2IQczw1VEOujk76wUnZBoWayglmXxq9F5Yn1on4fPzMWV9JWsz53zAZAZAKc4lSKTj4y3rBatmAvCqV24ZCUySJ0YeQjoWlc7esUrECViBtrCgZDZD
+
+
+Body>>form-data
+// 1-parameter for messaging_product being passed
+//key
+text
+messaging_product
+
+//value
+whatsapp
+
+//2-selecting file for which media_id is to be generated
+//under key select the file type
+file
+
+// value - select the file to be added browsing through your system make sure the path of the file is added in the working directory
+
+
+
+
+               

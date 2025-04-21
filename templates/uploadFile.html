@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+        <title>Spring Boot File Upload / Download Rest API Example</title>
+        <link rel="stylesheet" href="/css/main.css" />
+        <style>
+        
+        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        
+    </head>
+    <body>
+        <noscript>
+            <h2>Sorry! Your browser doesn't support Javascript</h2>
+        </noscript>
+        <div class="upload-container">
+            <div class="upload-header">
+                <h2>Spring Boot File Upload / Download Rest API Example</h2>
+            </div>
+            <div class="upload-content">
+                <div class="single-upload">
+                    <h3>Upload Single File</h3>
+                    <form id="singleUploadForm" name="singleUploadForm">
+                        <input id="singleFileUploadInput" type="file" name="file" class="file-input" required />
+                        <button type="submit" class="primary submit-btn">Submit</button>
+                    </form>
+                    <div class="upload-response">
+                        <div id="singleFileUploadError"></div>
+                        <div id="singleFileUploadSuccess"></div>
+                    </div>
+                </div>
+                <div class="multiple-upload">
+                    <h3>Upload Multiple Files</h3>
+                    <form id="multipleUploadForm" name="multipleUploadForm">
+                        <input id="multipleFileUploadInput" type="file" name="files" class="file-input" multiple required />
+                        <button type="submit" class="primary submit-btn">Submit</button>
+                    </form>
+                    <div class="upload-response">
+                        <div id="multipleFileUploadError"></div>
+                        <div id="multipleFileUploadSuccess"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <script src="/js/main.js" ></script> -->
+    </body>
+    <script>
+    $('#singleUploadForm').submit(function(event) {
+        alert("Inside alert");
+    	var formElement = this;
+        // You can directly create form data from the form element
+        // (Or you could get the files from input element and append them to FormData as we did in vanilla javascript)
+        var formData = new FormData(formElement);
+
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "/uploadFile",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                console.log(response);
+                // process response
+            },
+            error: function (error) {
+                console.log(error);
+                // process error
+            }
+        });
+
+        event.preventDefault();
+    });
+    </script>
+</html>
